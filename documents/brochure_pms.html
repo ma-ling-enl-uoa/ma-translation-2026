@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>MA in Translation - NKUA - The Intelligence Turn</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --midnight:#0A1628;--navy:#122040;--gold:#C89B00;--gold-lt:#E8C840;
+  --cream:#F7F4EE;--teal:#006B6B;--teal-dk:#004848;--teal-lt:#D6EDED;
+  --white:#FFFFFF;--ink:#1A1A2E;--muted:#555566;
+}
+body{width:210mm;min-height:297mm;font-family:'EB Garamond',Georgia,serif;background:var(--cream);color:var(--ink)}
+
+/* HERO */
+.hero{
+  background:var(--midnight);
+  padding:32px 40px 38px;
+  position:relative;overflow:hidden;
+}
+.hero-ring{
+  position:absolute;border-radius:50%;border:1.5px solid rgba(200,155,0,.22);
+}
+.r1{width:380px;height:380px;top:-140px;right:-100px}
+.r2{width:220px;height:220px;top:-40px;right:80px}
+.r3{width:120px;height:120px;top:20px;right:220px}
+
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px;position:relative;z-index:2}
+.uni-stack span{display:block;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.55);line-height:1.7}
+.yr{
+  font-family:'Playfair Display',serif;font-weight:700;font-size:11px;
+  background:var(--gold);color:var(--midnight);padding:4px 12px;letter-spacing:1px;
+}
+
+.hero-body{position:relative;z-index:2}
+.eyebrow{
+  font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;font-size:52px;font-weight:900;
+  color:var(--white);line-height:.98;margin-bottom:4px;
+}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-turn{
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:700;
+  font-style:italic;color:rgba(255,255,255,.9);
+  border-left:3px solid var(--gold);padding-left:14px;margin-top:14px;line-height:1.3;
+}
+.hero-tagline{
+  font-family:'EB Garamond',serif;font-size:11.5px;color:rgba(255,255,255,.6);
+  padding-left:17px;margin-top:5px;
+}
+.hero-spec{
+  display:inline-block;background:var(--teal);color:#fff;
+  font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;
+  text-transform:uppercase;padding:5px 14px;margin-top:18px;
+}
+
+/* GOLD BAR */
+.gold-bar{height:4px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-lt) 50%,var(--teal) 100%)}
+
+/* TWO-COL GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;min-height:0}
+.col{padding:26px 28px 20px}
+.col-l{border-right:1px solid rgba(0,0,0,.08)}
+.col-r{background:rgba(255,255,255,.55)}
+
+/* SECTION LABELS */
+.sec-label{
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--teal);
+  border-bottom:1px solid var(--teal);padding-bottom:3px;margin-bottom:12px;
+}
+h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--midnight);margin-bottom:8px}
+p{font-family:'EB Garamond',serif;font-size:10.5px;line-height:1.65;color:#383848;margin-bottom:8px}
+
+/* PULL QUOTE */
+.pq{
+  background:var(--midnight);padding:16px 18px 14px;margin:12px 0;
+  border-left:3px solid var(--gold);position:relative;
+}
+.pq p{color:rgba(255,255,255,.88);font-style:italic;font-size:10.5px;margin:0;line-height:1.55}
+.pq-mark{
+  position:absolute;top:-8px;left:12px;
+  font-family:'Playfair Display',serif;font-size:48px;color:var(--gold);line-height:1;
+  pointer-events:none;z-index:0;
+}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
+.stat{background:var(--midnight);padding:10px 6px;text-align:center}
+.stat-n{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--gold);display:block}
+.stat-l{font-family:'Space Mono',monospace;font-size:6.5px;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.8px}
+
+/* COURSES */
+.course-grid{display:grid;gap:5px;margin:8px 0}
+.ci{border-left:3px solid var(--gold);padding:5px 8px;background:rgba(200,155,0,.05)}
+.ci.new{border-left-color:var(--teal);background:rgba(0,107,107,.06)}
+.cn{font-family:'EB Garamond',serif;font-size:10px;font-weight:600;color:var(--midnight)}
+.ct{font-family:'Space Mono',monospace;font-size:7px;color:var(--teal);letter-spacing:.4px;margin-top:1px}
+.nt{
+  display:inline-block;background:var(--teal);color:#fff;
+  font-family:'Space Mono',monospace;font-size:5.5px;letter-spacing:.5px;text-transform:uppercase;
+  padding:1px 4px;margin-left:4px;vertical-align:middle;
+}
+
+/* DATE ROWS */
+.dr{display:flex;margin:4px 0}
+.db{background:var(--teal);color:#fff;padding:3px 8px;font-family:'Space Mono',monospace;font-size:7px;white-space:nowrap}
+.de{background:rgba(0,107,107,.1);padding:3px 8px;font-family:'EB Garamond',serif;font-size:9.5px;flex:1}
+
+/* DIVIDER */
+.div{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:10px 0}
+
+/* HIGHLIGHT BOX */
+.hbox{border:1px solid var(--gold);padding:10px 12px;margin:10px 0;background:rgba(200,155,0,.04)}
+.hbox p{font-size:10px;margin:0;line-height:1.55}
+
+/* BULLET ROWS */
+.br{display:flex;gap:6px;margin:3px 0;align-items:flex-start}
+.br-dot{color:var(--teal);font-size:14px;line-height:1.2;flex-shrink:0}
+.br-text{font-family:'EB Garamond',serif;font-size:9.5px;line-height:1.55;color:#383848}
+
+/* FOOTER */
+.footer{background:var(--midnight);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.fc{color:rgba(255,255,255,.75);font-family:'EB Garamond',serif;font-size:9px;line-height:1.8}
+.fc strong{color:var(--gold)}
+.fq{
+  width:48px;height:48px;border:1.5px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  color:rgba(255,255,255,.45);font-family:'Space Mono',monospace;font-size:6px;text-align:center;
+  flex-shrink:0;
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-ring r1"></div>
+  <div class="hero-ring r2"></div>
+  <div class="hero-ring r3"></div>
+  <div class="hero-top">
+  <div class="uni-stack">
+  <span>National and Kapodistrian University of Athens</span>
+  <span>School of Philosophy &nbsp;·&nbsp; Dept. of English Language and Literature</span>
+  </div>
+  <div class="yr">2026&ndash;2028</div>
+  </div>
+  <div class="hero-body">
+  <div class="eyebrow">Postgraduate Programme &nbsp;·&nbsp; Specialization: Translation Studies</div>
+  <div class="hero-title">MA in<br><em>Translation</em></div>
+  <div class="hero-turn">The Intelligence Turn</div>
+  <div class="hero-tagline">Language, Culture &amp; Human Meaning in the Age of AI</div>
+  <div class="hero-spec">Translation Studies &nbsp;·&nbsp; English Language &amp; Literature &nbsp;·&nbsp; NKUA</div>
+  </div>
+</div>
+
+<div class="gold-bar"></div>
+
+<!-- MAIN GRID -->
+<div class="grid">
+
+  <!-- LEFT -->
+  <div class="col col-l">
+  <div class="sec-label">The Programme</div>
+  <p>This rigorous, research-led MA equips the next generation of translation professionals with critical intelligence, digital fluency, and cross-cultural insight. When machines translate <em>words</em>, humans translate <em>worlds</em>.</p>
+
+  <div class="pq">
+  <div class="pq-mark">&ldquo;</div>
+  <p>Languages are living archives. We train translators who understand not just the text, but the civilization behind it, and the algorithm that cannot reach it.</p>
+  </div>
+
+  <div class="stats">
+  <div class="stat"><span class="stat-n">90</span><span class="stat-l">ECTS Credits</span></div>
+  <div class="stat"><span class="stat-n">3</span><span class="stat-l">Semesters</span></div>
+  
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-label">2026&ndash;2028 Courses</div>
+  <p style="font-size:8.5px;color:var(--teal);margin-bottom:6px">&#9654; 1st Semester: choose 3 from 4 &nbsp;(10 ECTS each)</p>
+  <div class="course-grid">
+  <div class="ci"><div class="cn">Research Methodology in Translation Studies</div><div class="ct">Maria Sidiropoulou</div></div>
+  <div class="ci"><div class="cn">Psycholinguistic Approach to Translation</div><div class="ct">Anna Hatzidaki</div></div>
+  <div class="ci"><div class="cn">Translation Seminar</div><div class="ct">Stavroula Kefala</div></div>
+  <div class="ci"><div class="cn">Text Linguistics</div><div class="ct">Dionysis Goutsos</div></div>
+  </div>
+  <p style="font-size:8.5px;color:var(--teal);margin:8px 0 6px">&#9654; 2nd Semester: choose 3 from 4 &nbsp;(10 ECTS each)</p>
+  <div class="course-grid">
+  <div class="ci"><div class="cn">Translation and Language Variation</div><div class="ct">Nikolaos Lavidas</div></div>
+  <div class="ci"><div class="cn">Translation and Intercultural Communication</div><div class="ct">Anta Korda</div></div>
+  <div class="ci"><div class="cn">Literacy and Translation</div><div class="ct">Vangelis Intzidis</div></div>
+  <div class="ci"><div class="cn">Practicum</div><div class="ct">Nikolaos Lavidas, Maria Sidiropoulou</div></div>
+  </div>
+  <p style="font-size:9px;margin-top:8px;color:var(--muted)">+ 3rd Semester: MA Dissertation (30 ECTS)</p>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="col col-r">
+  <div class="sec-label">The Intelligence Turn</div>
+  <p>We live in an era when machines can draft a sentence in any language. What they cannot do is understand a civilization, read irony between lines written a century ago, or decide when <em>not</em> to translate. That human intelligence is exactly what this MA trains.</p>
+
+  <div class="hbox">
+  <p><strong>No written entrance exam.</strong> Selection is based on your portfolio (70%) and an oral interview (30%). We want to hear how you think.</p>
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-label">Who Should Apply?</div>
+  <div class="br"><span class="br-dot">&#9670;</span><span class="br-text">Graduates of English Language &amp; Literature</span></div>
+  <div class="br"><span class="br-dot">&#9670;</span><span class="br-text">Graduates with background in Linguistics or Translation</span></div>
+  <div class="br"><span class="br-dot">&#9670;</span><span class="br-text">International graduates with equivalent qualifications (C2 English required)</span></div>
+  <div class="br"><span class="br-dot">&#9670;</span><span class="br-text">Translation professionals seeking a research-grounded MA</span></div>
+
+  <div class="div"></div>
+  <div class="sec-label">Important Dates</div>
+  <div class="dr"><div class="db">2 May 2026</div><div class="de">Applications open</div></div>
+  <div class="dr"><div class="db">20 Sep 2026</div><div class="de">Application deadline</div></div>
+  <div class="dr"><div class="db">29 Sep&ndash;3 Oct</div><div class="de">Oral interviews</div></div>
+  <div class="dr"><div class="db">6 Oct 2026</div><div class="de">Results announced</div></div>
+  <div class="dr"><div class="db">12 Oct 2026</div><div class="de">Programme begins</div></div>
+
+  <div class="div"></div>
+  <div class="sec-label">How to Apply</div>
+  <p style="font-size:9.5px">Complete the online form and upload <strong>one single PDF</strong> containing: CV &middot; degree &middot; transcript &middot; language certificates &middot; publications/papers (if any) &middot; Statement of Purpose (max. 400 words).</p>
+  <p style="font-size:9.5px"><strong>One letter of recommendation:</strong> you forward the reference form to your referee, who submits it directly.</p>
+  <div style="margin-top:10px;background:var(--midnight);padding:8px 12px;text-align:center">
+  <p style="color:var(--gold);font-family:'Playfair Display',serif;font-size:10px;font-style:italic;margin:0">Apply at: <a href='https://docs.google.com/forms/d/e/1FAIpQLSdSaibUW1g-O6EJdxRmDbY1eFuHoVauUCiOErqolhHZobq-cQ/viewform' style='color:var(--gold);text-decoration:underline'>Apply (online form)</a><br><span style='font-size:8.5px;color:var(--muted)'>Reference letter (for referees): <a href='https://docs.google.com/forms/d/e/1FAIpQLSfATOcT-lwA55lcwO7Np9JSkQ3AB_8kYherYSG613hppvVWYQ/viewform' style='color:var(--teal)'>open form</a></span></p>
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-label">MA Programme Facts</div>
+  <p style="font-size:9.5px">Three academic semesters. Compulsory attendance. Maximum ten admissions per cycle. Government Gazette 1501/B'/17.03.2026 (Law 4957/2022).</p>
+  <p style="font-size:9.5px;color:var(--muted)">All teaching, assignments and the MA Dissertation are conducted in English. Working language pair: English / Greek.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="fc">
+  <strong>MA Secretariat &nbsp;·&nbsp; Dept. of English Language and Literature, NKUA</strong><br>
+  Stella Karagianni &nbsp;·&nbsp; Office 709 (7th floor) &nbsp;·&nbsp; Tel. 210 7277771 &nbsp;·&nbsp; skarag@enl.uoa.gr<br>
+  <strong>Official:</strong> en.enl.uoa.gr &nbsp;&middot;&nbsp; <strong>Public site:</strong> ma-ling-enl-uoa.github.io/ma-translation-2026 <br>Gov. Gazette 1501/B'/17.03.2026 [Law 4957/2022]
+  </div>
+  <div class="fq">QR<br>CODE<br>HERE</div>
+</div>
+
+</body>
+</html>

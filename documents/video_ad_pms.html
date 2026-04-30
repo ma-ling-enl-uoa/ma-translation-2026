@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA in Translation: The Intelligence Turn (NKUA)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#000;overflow:hidden}
+:root{--gold:#C89B00;--teal:#006B6B;--white:#fff}
+
+.screen{
+  position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 30% 40%,#0d1f3c 0%,#050d1a 55%,#000 100%);
+}
+
+/* PARTICLES */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+.particle{
+  position:absolute;border-radius:50%;background:rgba(200,155,0,.15);
+  animation:float linear infinite;
+}
+
+/* SLIDES */
+.slide{
+  position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;transition:opacity 1s ease;padding:40px;z-index:10;text-align:center;
+}
+.slide.active{opacity:1}
+
+/* TOP BAR */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 40px;z-index:50;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  background:rgba(5,13,26,.7);backdrop-filter:blur(10px);
+}
+.top-uni{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.5);text-transform:uppercase}
+.top-yr{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--gold)}
+
+/* BOTTOM BAR */
+.bottom-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  padding:16px 40px;z-index:50;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(5,13,26,.7);border-top:1px solid rgba(255,255,255,.08);
+}
+.progress-track{flex:1;height:2px;background:rgba(255,255,255,.1);margin:0 20px;border-radius:2px}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s ease;width:0%}
+.slide-dots{display:flex;gap:8px}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s}
+.dot.on{background:var(--gold);transform:scale(1.3)}
+
+/* SLIDE 1: INTRO */
+.s1 .uni{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:4px;color:rgba(255,255,255,.5);
+  text-transform:uppercase;animation:fadeUp .8s .2s both}
+.s1 .dept{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(200,155,0,.7);
+  text-transform:uppercase;margin-top:8px;animation:fadeUp .8s .5s both}
+.s1 .line{width:80px;height:1px;background:var(--gold);margin:20px auto;animation:expandW .8s .8s both}
+
+/* SLIDE 2: TITLE */
+.s2 .ma{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;color:rgba(255,255,255,.7);
+  letter-spacing:8px;text-transform:uppercase;animation:fadeUp .8s .1s both}
+.s2 .translation{font-family:'Playfair Display',serif;font-size:96px;font-weight:900;color:#fff;
+  line-height:.9;animation:fadeUp .8s .4s both}
+.s2 .turn{font-family:'Playfair Display',serif;font-size:36px;font-style:italic;color:var(--gold);
+  margin-top:16px;animation:fadeUp .8s .7s both}
+.s2 .tagline{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;
+  color:rgba(255,255,255,.5);margin-top:12px;animation:fadeUp .8s 1s both}
+
+/* SLIDE 3: QUESTION */
+.s3 .big-q{font-family:'Playfair Display',serif;font-size:60px;font-style:italic;
+  color:#fff;line-height:1.2;animation:fadeUp .8s .2s both}
+.s3 .big-q em{color:var(--gold)}
+.s3 .ans{font-family:'Space Mono',monospace;font-size:14px;letter-spacing:2px;color:rgba(255,255,255,.5);
+  margin-top:30px;animation:fadeUp .8s .9s both}
+
+/* SLIDE 4: FEATURES */
+.s4 .feat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:900px;width:100%}
+.feat{border:1px solid rgba(255,255,255,.1);padding:30px 24px;text-align:left;position:relative;overflow:hidden}
+.feat::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,155,0,.05),transparent);pointer-events:none}
+.feat-num{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:rgba(200,155,0,.25);line-height:1;margin-bottom:8px}
+.feat-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
+.feat-body{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.5px;color:rgba(255,255,255,.45);line-height:1.7;text-transform:uppercase}
+.feat{animation:fadeUp .7s both}
+.feat:nth-child(1){animation-delay:.2s}
+.feat:nth-child(2){animation-delay:.45s}
+.feat:nth-child(3){animation-delay:.7s}
+
+/* SLIDE 5: COURSES */
+.s5 .courses-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:30px;animation:fadeUp .6s .1s both}
+.s5 .courses-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:760px;width:100%}
+.course-card{border-left:3px solid var(--gold);padding:12px 16px;background:rgba(255,255,255,.04);text-align:left}
+.course-card.new{border-left-color:var(--teal);background:rgba(0,107,107,.08)}
+.course-card .ctitle{font-family:'Playfair Display',serif;font-size:15px;color:#fff;font-weight:700;margin-bottom:3px}
+.course-card .ctag{font-family:'Space Mono',monospace;font-size:8px;color:rgba(200,155,0,.7);text-transform:uppercase;letter-spacing:1px}
+.course-card.new .ctag{color:rgba(0,200,200,.7)}
+.course-card{animation:fadeUp .6s both}
+.course-card:nth-child(1){animation-delay:.2s}
+.course-card:nth-child(2){animation-delay:.35s}
+.course-card:nth-child(3){animation-delay:.5s}
+.course-card:nth-child(4){animation-delay:.65s}
+.course-card:nth-child(5){animation-delay:.8s}
+.course-card:nth-child(6){animation-delay:.95s}
+.course-card:nth-child(7){animation-delay:1.1s}
+.course-card:nth-child(8){animation-delay:1.25s}
+
+/* SLIDE 6: DATES */
+.s6 .dates-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:680px;width:100%}
+.dcard{display:flex;flex-direction:column;gap:6px;animation:fadeUp .7s both;border:1px solid rgba(255,255,255,.08);padding:20px 24px}
+.dcard:nth-child(1){animation-delay:.1s}
+.dcard:nth-child(2){animation-delay:.3s}
+.dcard:nth-child(3){animation-delay:.5s}
+.dcard:nth-child(4){animation-delay:.7s}
+.dcard .ddate{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold)}
+.dcard .devent{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+/* SLIDE 7: CTA */
+.s7 .cta-label{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:rgba(255,255,255,.4);animation:fadeUp .6s .1s both}
+.s7 .cta-main{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:#fff;
+  line-height:1;margin:16px 0;animation:fadeUp .7s .4s both}
+.s7 .cta-main em{color:var(--gold);font-style:italic}
+.s7 .cta-url{font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;
+  color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);
+  padding:12px 30px;display:inline-block;margin-top:30px;animation:fadeUp .7s .8s both}
+.s7 .cta-contact{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;
+  color:rgba(255,255,255,.35);margin-top:20px;line-height:1.8;animation:fadeUp .7s 1.1s both}
+
+/* PLAY OVERLAY */
+.play-overlay{
+  position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.92);z-index:100;cursor:pointer;
+  transition:opacity .5s;
+}
+.play-overlay.hidden{opacity:0;pointer-events:none}
+.play-btn{
+  width:80px;height:80px;border-radius:50%;border:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  transition:transform .2s;
+}
+.play-btn:hover{transform:scale(1.1)}
+.play-arrow{width:0;height:0;border-style:solid;border-width:16px 0 16px 28px;
+  border-color:transparent transparent transparent var(--gold);margin-left:6px}
+.play-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(255,255,255,.6)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes expandW{from{width:0}to{width:80px}}
+@keyframes float{
+  0%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-30px) rotate(180deg)}
+  100%{transform:translateY(0) rotate(360deg)}
+}
+</style>
+</head>
+<body>
+
+<!-- PLAY OVERLAY -->
+<div class="play-overlay" id="overlay" onclick="startPresentation()">
+  <div class="play-btn"><div class="play-arrow"></div></div>
+  <div class="play-label">Click to play</div>
+</div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-uni">National and Kapodistrian University of Athens &nbsp;·&nbsp; School of Philosophy</div>
+  <div class="top-yr">2026–2028</div>
+</div>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- SLIDES -->
+<div class="slide s1 active" id="slide-0">
+  <div class="uni">National and Kapodistrian University of Athens</div>
+  <div class="dept">Department of English Language and Literature</div>
+  <div class="line"></div>
+</div>
+
+<div class="slide s2" id="slide-1">
+  <div class="ma">MA in</div>
+  <div class="translation">Translation</div>
+  <div class="turn">The Intelligence Turn</div>
+  <div class="tagline">Language, Culture &amp; Human Meaning in the Age of AI</div>
+</div>
+
+<div class="slide s3" id="slide-2">
+  <div class="big-q">When machines speak,<br>who <em>understands</em>?</div>
+  <div class="ans">Translation Studies &nbsp;·&nbsp; NKUA &nbsp;·&nbsp; Since 2018</div>
+</div>
+
+<div class="slide s4" id="slide-3">
+  <div class="feat-grid">
+  <div class="feat">
+  <div class="feat-num">90</div>
+  <div class="feat-title">ECTS Credits</div>
+  <div class="feat-body">3 semesters<br>English-taught<br>research-led</div>
+  </div>
+  <div class="feat">
+  <div class="feat-num">0</div>
+  <div class="feat-title">Written Exams</div>
+  <div class="feat-body">Portfolio 70%<br>Oral interview 30%<br>We want to hear you think</div>
+  </div>
+  <div class="feat">
+  <div class="feat-num">∞</div>
+  <div class="feat-title">Possibilities</div>
+  <div class="feat-body">AI tools · MT · Subtitling<br>Corpus linguistics<br>Publishing & industry</div>
+  </div>
+  </div>
+</div>
+
+<div class="slide s5" id="slide-4">
+  <div class="courses-label">2026–2028 Courses &nbsp;·&nbsp; Choose 3 from 4 each semester</div>
+  <div class="courses-grid">
+  <div class="course-card"><div class="ctitle">Research Methodology in Translation Studies</div><div class="ctag">1st Sem &middot; M. Sidiropoulou</div></div>
+  <div class="course-card"><div class="ctitle">Psycholinguistic Approach to Translation</div><div class="ctag">1st Sem &middot; A. Hatzidaki</div></div>
+  <div class="course-card"><div class="ctitle">Translation Seminar</div><div class="ctag">1st Sem &middot; S. Kefala</div></div>
+  <div class="course-card"><div class="ctitle">Text Linguistics</div><div class="ctag">1st Sem &middot; D. Goutsos</div></div>
+  <div class="course-card new"><div class="ctitle">Translation &amp; Language Variation</div><div class="ctag">2nd Sem &middot; N. Lavidas</div></div>
+  <div class="course-card new"><div class="ctitle">Translation &amp; Intercultural Communication</div><div class="ctag">2nd Sem &middot; A. Korda</div></div>
+  <div class="course-card new"><div class="ctitle">Literacy and Translation</div><div class="ctag">2nd Sem &middot; V. Intzidis</div></div>
+  <div class="course-card"><div class="ctitle">Practicum</div><div class="ctag">2nd Sem &middot; N. Lavidas, M. Sidiropoulou</div></div>
+  </div>
+</div>
+
+<div class="slide s6" id="slide-5">
+  <div class="courses-label" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:30px;animation:fadeUp .6s .1s both">Important Dates</div>
+  <div class="dates-wrap">
+  <div class="dcard"><div class="ddate">2 May 2026</div><div class="devent">Applications Open</div></div>
+  <div class="dcard"><div class="ddate">20 Sep 2026</div><div class="devent">Application Deadline</div></div>
+  <div class="dcard"><div class="ddate">29 Sep to 3 Oct</div><div class="devent">Oral Interviews</div></div>
+  <div class="dcard"><div class="ddate">12 Oct 2026</div><div class="devent">Programme Begins</div></div>
+  </div>
+</div>
+
+<div class="slide s7" id="slide-6">
+  <div class="cta-label">Apply Now</div>
+  <div class="cta-main">Join the<br><em>Intelligence Turn</em></div>
+  <div class="cta-url"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdSaibUW1g-O6EJdxRmDbY1eFuHoVauUCiOErqolhHZobq-cQ/viewform" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Apply &rarr; Application Form</a></div>
+  <div class="cta-url" style="margin-top:10px;font-size:13px;opacity:.75"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfATOcT-lwA55lcwO7Np9JSkQ3AB_8kYherYSG613hppvVWYQ/viewform" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Reference letter form (for referees)</a></div>
+  <div class="cta-url" style="margin-top:10px;font-size:12px;opacity:.5">ma-ling-enl-uoa.github.io/ma-translation-2026 &nbsp;&middot;&nbsp; en.enl.uoa.gr</div>
+  <div class="cta-contact">Stella Karagianni &nbsp;·&nbsp; skarag@enl.uoa.gr &nbsp;·&nbsp; 210 7277771<br>Office 709 (7th floor) &nbsp;·&nbsp; Dept. of English Language &amp; Literature &nbsp;·&nbsp; NKUA</div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="slide-dots" id="dots"></div>
+  <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+  <div style="font-family:'Space Mono',monospace;font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1px" id="counter">1 / 7</div>
+</div>
+
+<script>
+const TOTAL = 7;
+const DURATION = 5000;
+let current = 0;
+let timer = null;
+let started = false;
+let audioCtx = null;
+let masterGain = null;
+
+// PARTICLES
+(function(){
+  const p = document.getElementById('particles');
+  for(let i=0;i<25;i++){
+  const d = document.createElement('div');
+  d.className='particle';
+  const s = 2+Math.random()*4;
+  d.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;
+  animation-duration:${15+Math.random()*20}s;animation-delay:-${Math.random()*20}s;
+  opacity:${.1+Math.random()*.3}`;
+  p.appendChild(d);
+  }
+})();
+
+// DOTS
+const dots = document.getElementById('dots');
+for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='dot';dots.appendChild(d)}
+
+function updateUI(){
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===current));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===current));
+  document.getElementById('progress').style.width=`${((current+1)/TOTAL)*100}%`;
+  document.getElementById('counter').textContent=`${current+1} / ${TOTAL}`;
+}
+
+function next(){
+  current=(current+1)%TOTAL;
+  updateUI();
+  if(current===TOTAL-1){clearInterval(timer);timer=null}
+}
+
+function startPresentation(){
+  if(started)return;
+  started=true;
+  document.getElementById('overlay').classList.add('hidden');
+  startMusic();
+  timer=setInterval(next, DURATION);
+  updateUI();
+}
+
+// CINEMATIC SCORE via Web Audio API: piano, warm strings, sub-bass, soaring lead
+function startMusic(){
+  try{
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  const TOTAL_SEC = TOTAL*DURATION/1000;
+
+  masterGain=audioCtx.createGain();
+  masterGain.gain.setValueAtTime(0,audioCtx.currentTime);
+  masterGain.gain.linearRampToValueAtTime(.32,audioCtx.currentTime+4);
+  masterGain.connect(audioCtx.destination);
+
+  const reverb=audioCtx.createConvolver();
+  const rLen=audioCtx.sampleRate*4.5;
+  const rBuf=audioCtx.createBuffer(2,rLen,audioCtx.sampleRate);
+  for(let ch=0;ch<2;ch++){
+  const d=rBuf.getChannelData(ch);
+  for(let i=0;i<rLen;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/rLen,2.4);
+  }
+  reverb.buffer=rBuf;
+  const wetBus=audioCtx.createGain();wetBus.gain.value=.55;
+  reverb.connect(wetBus);wetBus.connect(masterGain);
+
+  function send(node,wetAmount){
+  const wet=audioCtx.createGain();wet.gain.value=wetAmount;
+  node.connect(masterGain);
+  node.connect(wet);wet.connect(reverb);
+  }
+
+  const now=audioCtx.currentTime;
+
+  /* Cinematic minor progression: Cm, Ab, Eb, Bb (i, VI, III, VII), played twice */
+  const Cm = [130.81, 155.56, 196.00, 233.08];
+  const Ab = [103.83, 130.81, 155.56, 207.65];
+  const Eb = [155.56, 196.00, 233.08, 311.13];
+  const Bb = [116.54, 146.83, 174.61, 233.08];
+  const progression = [Cm,Ab,Eb,Bb,Cm,Ab,Eb,Bb];
+  const BAR=4.4;
+
+  function pianoNote(freq,t,dur,vel){
+  const o=audioCtx.createOscillator();
+  const o2=audioCtx.createOscillator();
+  const g=audioCtx.createGain();
+  o.type='triangle';o2.type='sine';
+  o.frequency.value=freq;o2.frequency.value=freq*2.005;
+  const peak=.05*vel;
+  g.gain.setValueAtTime(0,t);
+  g.gain.linearRampToValueAtTime(peak,t+.012);
+  g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g);o2.connect(g);
+  send(g,.6);
+  o.start(t);o2.start(t);
+  o.stop(t+dur+.05);o2.stop(t+dur+.05);
+  }
+
+  function stringChord(freqs,t,len){
+  const filter=audioCtx.createBiquadFilter();
+  filter.type='lowpass';
+  filter.frequency.setValueAtTime(600,t);
+  filter.frequency.linearRampToValueAtTime(2400,t+len*.7);
+  filter.Q.value=1.4;
+  const g=audioCtx.createGain();
+  g.gain.setValueAtTime(0,t);
+  g.gain.linearRampToValueAtTime(.06,t+1.6);
+  g.gain.setValueAtTime(.06,t+len-1.6);
+  g.gain.linearRampToValueAtTime(0,t+len);
+  freqs.forEach(function(f){
+  const o=audioCtx.createOscillator();
+  const o2=audioCtx.createOscillator();
+  o.type='sawtooth';o2.type='sawtooth';
+  o.frequency.value=f;o2.frequency.value=f*1.005;
+  o.connect(filter);o2.connect(filter);
+  o.start(t);o2.start(t);
+  o.stop(t+len+.1);o2.stop(t+len+.1);
+  });
+  filter.connect(g);
+  send(g,.7);
+  }
+
+  function subBass(rootFreq,t,len){
+  const o=audioCtx.createOscillator();
+  const g=audioCtx.createGain();
+  o.type='sine';
+  o.frequency.value=rootFreq*0.5;
+  g.gain.setValueAtTime(0,t);
+  g.gain.linearRampToValueAtTime(.09,t+1.2);
+  g.gain.setValueAtTime(.09,t+len-.8);
+  g.gain.linearRampToValueAtTime(0,t+len);
+  o.connect(g);g.connect(masterGain);
+  o.start(t);o.stop(t+len+.1);
+  }
+
+  progression.forEach(function(chord,ci){
+  const t=now+ci*BAR;
+  stringChord(chord,t,BAR+1);
+  subBass(chord[0],t,BAR+0.6);
+  const order=[0,2,1,3,2];
+  order.forEach(function(idx,k){
+  const dur = (k===order.length-1) ? 2.2 : 1.0;
+  pianoNote(chord[idx]*2, t + k*(BAR/order.length), dur, k===0?1:.78);
+  });
+  });
+
+  /* Soaring lead: pentatonic ascent then resolves */
+  const leadNotes = [
+  [523.25, BAR*2.0, 2.2],
+  [622.25, BAR*2.5, 1.8],
+  [698.46, BAR*3.0, 2.6],
+  [783.99, BAR*3.6, 3.0],
+  [932.33, BAR*4.4, 3.2],
+  [1046.5, BAR*5.2, 4.0],
+  [932.33, BAR*6.2, 2.8],
+  [783.99, BAR*7.0, 4.0]
+  ];
+  leadNotes.forEach(function(arr){
+  const f=arr[0],off=arr[1],len=arr[2];
+  const t=now+off;
+  const o=audioCtx.createOscillator();
+  const o2=audioCtx.createOscillator();
+  const lfo=audioCtx.createOscillator();const lfoGain=audioCtx.createGain();
+  lfo.frequency.value=4.8;lfoGain.gain.value=2.6;
+  lfo.connect(lfoGain);lfoGain.connect(o.frequency);lfoGain.connect(o2.frequency);
+  const filt=audioCtx.createBiquadFilter();
+  filt.type='lowpass';filt.frequency.value=4500;filt.Q.value=.8;
+  const g=audioCtx.createGain();
+  o.type='triangle';o2.type='sine';
+  o.frequency.value=f;o2.frequency.value=f/2;
+  g.gain.setValueAtTime(0,t);
+  g.gain.linearRampToValueAtTime(.085,t+.6);
+  g.gain.setValueAtTime(.085,t+len-1.0);
+  g.gain.linearRampToValueAtTime(0,t+len);
+  o.connect(filt);o2.connect(filt);filt.connect(g);
+  send(g,.85);
+  lfo.start(t);o.start(t);o2.start(t);
+  lfo.stop(t+len+.1);o.stop(t+len+.1);o2.stop(t+len+.1);
+  });
+
+  /* Final timpani-like thud */
+  const tEnd = now + BAR*7.5;
+  const thud = audioCtx.createOscillator();
+  const thudG = audioCtx.createGain();
+  thud.type='sine';
+  thud.frequency.setValueAtTime(70,tEnd);
+  thud.frequency.exponentialRampToValueAtTime(45,tEnd+.6);
+  thudG.gain.setValueAtTime(0,tEnd);
+  thudG.gain.linearRampToValueAtTime(.18,tEnd+.05);
+  thudG.gain.exponentialRampToValueAtTime(.0001,tEnd+1.4);
+  thud.connect(thudG);thudG.connect(masterGain);
+  thud.start(tEnd);thud.stop(tEnd+1.5);
+
+  masterGain.gain.setValueAtTime(.32, now+TOTAL_SEC-3.5);
+  masterGain.gain.linearRampToValueAtTime(0, now+TOTAL_SEC);
+
+  }catch(e){console.warn('Audio unavailable',e)}
+}
+
+// Keyboard nav
+document.addEventListener('keydown',function(e){
+  if(!started)return;
+  if(e.key==='ArrowRight'||e.key===' '){clearInterval(timer);next();if(current<TOTAL-1)timer=setInterval(next,DURATION)}
+  if(e.key==='ArrowLeft'){clearInterval(timer);current=Math.max(0,current-1);updateUI();timer=setInterval(next,DURATION)}
+  if(e.key==='r'){clearInterval(timer);current=0;updateUI();timer=setInterval(next,DURATION)}
+});
+</script>
+</body>
+</html>
