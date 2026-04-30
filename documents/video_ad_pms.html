@@ -156,9 +156,61 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
   50%{transform:translateY(-30px) rotate(180deg)}
   100%{transform:translateY(0) rotate(360deg)}
 }
+
+/* === CINEMATIC ENHANCEMENTS === */
+.kb-bg{
+  position:fixed;inset:-5%;z-index:-1;
+  background:radial-gradient(ellipse at 30% 40%,rgba(13,31,60,.85) 0%,rgba(5,13,26,.95) 55%,#000 100%);
+  animation:kenburns 30s ease-in-out infinite alternate;
+}
+@keyframes kenburns{
+  0%{transform:scale(1) translate(0,0)}
+  100%{transform:scale(1.12) translate(-2%,2%)}
+}
+.bg-orb{
+  position:fixed;border-radius:50%;filter:blur(80px);opacity:.42;pointer-events:none;z-index:0;
+  animation:driftA 40s ease-in-out infinite alternate;
+}
+.bg-orb.b{animation:driftB 55s ease-in-out infinite alternate}
+.bg-orb.c{animation:driftC 50s ease-in-out infinite alternate}
+.bg-orb.d{animation:driftD 60s ease-in-out infinite alternate}
+@keyframes driftA{0%{top:5%;left:8%;transform:scale(1)}100%{top:25%;left:30%;transform:scale(1.4)}}
+@keyframes driftB{0%{top:60%;left:60%;transform:scale(1.2)}100%{top:30%;left:70%;transform:scale(.9)}}
+@keyframes driftC{0%{top:70%;left:10%;transform:scale(.9)}100%{top:50%;left:25%;transform:scale(1.3)}}
+@keyframes driftD{0%{top:10%;left:75%;transform:scale(1.1)}100%{top:65%;left:55%;transform:scale(1.5)}}
+.scanlines{
+  position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;
+  background:repeating-linear-gradient(0deg,#fff 0,#fff 1px,transparent 1px,transparent 3px);
+  mix-blend-mode:overlay;
+}
+.vignette{
+  position:fixed;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(ellipse at 50% 50%,transparent 30%,rgba(0,0,0,.6) 100%);
+}
+/* slide transition: subtle scale */
+.slide.active{animation:slidein 1.1s ease both}
+@keyframes slidein{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
+/* date slide rebuild */
+.s6 .dates-title{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:#fff;
+  letter-spacing:-1px;margin-bottom:8px;animation:fadeUp .8s .1s both}
+.s6 .dates-sub{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:rgba(200,155,0,.8);margin-bottom:36px;animation:fadeUp .8s .35s both}
+.s6 .dates-foot{margin-top:34px;font-family:'Playfair Display',serif;font-style:italic;font-size:22px;
+  color:rgba(255,255,255,.7);animation:fadeUp .8s 1s both}
+.s6 .dates-foot strong{color:var(--gold,#C89B00);font-weight:700;font-style:normal;letter-spacing:1px}
+
 </style>
 </head>
 <body>
+
+<div class="kb-bg"></div>
+<div class="bg-orb a" style="width:520px;height:520px;background:radial-gradient(circle,#C89B00,transparent 70%)"></div>
+<div class="bg-orb b" style="width:480px;height:480px;background:radial-gradient(circle,#006B6B,transparent 70%)"></div>
+<div class="bg-orb c" style="width:560px;height:560px;background:radial-gradient(circle,#A84438,transparent 70%)"></div>
+<div class="bg-orb d" style="width:420px;height:420px;background:radial-gradient(circle,#2C5F8A,transparent 70%)"></div>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
 
 <!-- PLAY OVERLAY -->
 <div class="play-overlay" id="overlay" onclick="startPresentation()">
@@ -197,12 +249,12 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
 <div class="slide s4" id="slide-3">
   <div class="feat-grid">
   <div class="feat">
-  <div class="feat-num">90</div>
+  <div class="feat-num" data-count="90">0</div>
   <div class="feat-title">ECTS Credits</div>
   <div class="feat-body">3 semesters<br>English-taught<br>research-led</div>
   </div>
   <div class="feat">
-  <div class="feat-num">0</div>
+  <div class="feat-num" data-count="0">0</div>
   <div class="feat-title">Written Exams</div>
   <div class="feat-body">Portfolio 70%<br>Oral interview 30%<br>We want to hear you think</div>
   </div>
@@ -229,13 +281,15 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
 </div>
 
 <div class="slide s6" id="slide-5">
-  <div class="courses-label" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:30px;animation:fadeUp .6s .1s both">Important Dates</div>
+  <div class="dates-title">Key Dates</div>
+  <div class="dates-sub">Application Cycle &middot; October 2026</div>
   <div class="dates-wrap">
   <div class="dcard"><div class="ddate">2 May 2026</div><div class="devent">Applications Open</div></div>
   <div class="dcard"><div class="ddate">20 Sep 2026</div><div class="devent">Application Deadline</div></div>
   <div class="dcard"><div class="ddate">29 Sep to 3 Oct</div><div class="devent">Oral Interviews</div></div>
   <div class="dcard"><div class="ddate">12 Oct 2026</div><div class="devent">Programme Begins</div></div>
   </div>
+  <div class="dates-foot">Apply for <strong>OCTOBER 2026</strong></div>
 </div>
 
 <div class="slide s7" id="slide-6">
@@ -457,6 +511,32 @@ function startMusic(){
 
   }catch(e){console.warn('Audio unavailable',e)}
 }
+
+
+/* Count-up animation when a slide containing data-count nums becomes active */
+function animateCountUp(slideEl){
+  slideEl.querySelectorAll('[data-count]').forEach(function(el){
+    if(el.dataset.done==='1') return;
+    el.dataset.done='1';
+    const target = parseInt(el.dataset.count,10);
+    if(isNaN(target)) return;
+    const dur = 1200; const start = performance.now();
+    function step(now){
+      const t = Math.min(1,(now-start)/dur);
+      const eased = 1 - Math.pow(1-t,3);
+      el.textContent = Math.round(target*eased);
+      if(t<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+/* Hook into updateUI by wrapping it */
+const _origUpdateUI = updateUI;
+updateUI = function(){
+  _origUpdateUI();
+  const active = document.querySelector('.slide.active');
+  if(active) animateCountUp(active);
+};
 
 // Keyboard nav
 document.addEventListener('keydown',function(e){
